@@ -1,0 +1,109 @@
+
+//name this page as cookies-reponse-form.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="java.net.URLEncoder" %>
+   
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+String s=request.getParameter("favoriteLanguage");
+s= URLEncoder.encode(s, "UTF-8");
+Cookie mycookie=new Cookie("vikascookie",s);
+mycookie.setMaxAge(60*60*24*365);
+response.addCookie(mycookie);
+%>
+<br/><br/>
+<a href="home-cookie.jsp">Go to home page</a>
+
+</body>
+</html>
+
+
+
+
+//name this page as cookie-form.html
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Main page</title>
+</head>
+<body>
+<form action="cookies-response-form.jsp">
+  Select your Favorite Programming Language
+ <select name="favoriteLanguage">
+        <option>Active Server Pages</option>
+            <option>Java</option>
+            <option>C#</option>
+            <option>Common Business-Oriented Language</option>
+            <option>PHP</option>
+            <option>Ruby</option>
+            <option>Hypertext Markup Language</option>
+    </select>
+    <input type="submit" value="submit">
+</form>
+</body>
+</html>
+
+
+
+//name this page as home-cookie.jsp
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="java.net.URLDecoder" %>
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+String fav="Java";
+Cookie[] cookie=request.getCookies();
+if(cookie!=null)
+{
+	for(Cookie temp:cookie)
+	{
+		if("vikascookie".equals(temp.getName()))
+		{
+			fav=  URLDecoder.decode(temp.getValue(), "UTF-8");
+			break; 	
+		}
+	}
+}
+%>
+<h4>New Books for <%= fav%></h4>
+<ul>
+    <li>blah blah blah</li>
+    <li>blah blah blah</li>
+</ul>
+ 
+<h4>Latest News Reports for <%= fav%></h4>
+<ul>
+    <li>blah blah blah</li>
+    <li>blah blah blah</li>
+</ul>
+ 
+<h4>Hot Jobs for <%= fav%></h4>
+<ul>
+    <li>blah blah blah</li>
+    <li>blah blah blah</li>
+</ul>
+ 
+<hr>
+<a href="cookies-personalize-form.html">Personalize this page</a>
+</body>
+</html>
